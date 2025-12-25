@@ -26,6 +26,8 @@ import {
   FiSettings,
   FiLogOut,
   FiChevronDown,
+  FiTrendingUp,
+  FiShield,
 } from 'react-icons/fi';
 import type { IconType } from 'react-icons';
 
@@ -38,13 +40,12 @@ interface NavItem {
 const navItems: NavItem[] = [
   { label: 'Dashboard', icon: FiHome, href: '/app/dashboard' },
   { label: 'Properties', icon: FiGrid, href: '/app/properties' },
-  { label: 'Calendar', icon: FiCalendar, href: '/app/calendar' },
-  { label: 'Bookings', icon: FiUsers, href: '/app/bookings' },
+  { label: 'Bookings', icon: FiCalendar, href: '/app/bookings' },
   { label: 'Leases', icon: FiFileText, href: '/app/leases' },
   { label: 'Finances', icon: FiDollarSign, href: '/app/finances' },
   { label: 'Maintenance', icon: FiTool, href: '/app/maintenance' },
-  { label: 'Reports', icon: FiBarChart2, href: '/app/reports' },
-  { label: 'Settings', icon: FiSettings, href: '/app/settings' },
+  { label: 'Analytics', icon: FiTrendingUp, href: '/app/analytics' },
+  { label: 'Admin', icon: FiShield, href: '/app/admin/settings' },
 ];
 
 interface SidebarProps {
