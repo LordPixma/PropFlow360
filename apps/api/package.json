@@ -1,0 +1,26 @@
+{
+  "name": "@propflow360/api",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "wrangler dev",
+    "build": "wrangler deploy --dry-run --outdir=dist",
+    "deploy": "wrangler deploy",
+    "typecheck": "tsc --noEmit",
+    "lint": "eslint src/"
+  },
+  "dependencies": {
+    "@propflow360/db": "workspace:*",
+    "@propflow360/types": "workspace:*",
+    "@propflow360/validators": "workspace:*",
+    "hono": "^4.6.14",
+    "@hono/zod-validator": "^0.4.2",
+    "nanoid": "^5.0.9"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "^4.20241218.0",
+    "typescript": "^5.7.2",
+    "wrangler": "^3.99.0"
+  }
+}

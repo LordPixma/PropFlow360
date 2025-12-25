@@ -1,0 +1,15 @@
+{
+  "extends": "../../tsconfig.base.json",
+  "compilerOptions": {
+    "lib": ["DOM", "DOM.Iterable", "ES2022"],
+    "jsx": "react-jsx",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "baseUrl": ".",
+    "paths": {
+      "~/*": ["./app/*"]
+    },
+    "types": ["@cloudflare/workers-types", "@remix-run/cloudflare"]
+  },
+  "include": ["env.d.ts", "app/**/*.ts", "app/**/*.tsx", "functions/**/*.ts"]
+}

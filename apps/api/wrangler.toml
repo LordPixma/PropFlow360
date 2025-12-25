@@ -1,0 +1,79 @@
+name = "propflow360-api-dev"
+main = "src/index.ts"
+compatibility_date = "2024-12-22"
+
+# Routes (for production - uncomment when ready)
+# routes = [
+#   { pattern = "api-dev.propflow360.com/*", zone_name = "propflow360.com" }
+# ]
+
+# ---------------- D1 ----------------
+[[d1_databases]]
+binding = "DB_CORE"
+database_name = "propflow360-core-dev"
+database_id = "REPLACE_WITH_D1_ID"
+
+[[d1_databases]]
+binding = "DB_AUDIT"
+database_name = "propflow360-audit-dev"
+database_id = "REPLACE_WITH_D1_ID"
+
+# ---------------- KV ----------------
+[[kv_namespaces]]
+binding = "KV_CONFIG"
+id = "REPLACE_WITH_KV_ID"
+
+[[kv_namespaces]]
+binding = "KV_CACHE"
+id = "REPLACE_WITH_KV_ID"
+
+[[kv_namespaces]]
+binding = "KV_SESSIONS"
+id = "REPLACE_WITH_KV_ID"
+
+# ---------------- R2 ----------------
+[[r2_buckets]]
+binding = "R2_MEDIA"
+bucket_name = "propflow360-media-dev"
+
+[[r2_buckets]]
+binding = "R2_DOCS"
+bucket_name = "propflow360-docs-dev"
+
+[[r2_buckets]]
+binding = "R2_EXPORTS"
+bucket_name = "propflow360-exports-dev"
+
+# ---------------- Durable Objects ----------------
+[durable_objects]
+bindings = [
+  { name = "DO_UNIT_LOCK", class_name = "UnitLock" },
+  { name = "DO_WEBHOOK_GUARD", class_name = "WebhookGuard" },
+  { name = "DO_RATE_LIMIT", class_name = "TenantRateLimit" }
+]
+
+[[migrations]]
+tag = "v1"
+new_classes = ["UnitLock", "WebhookGuard", "TenantRateLimit"]
+
+# ---------------- Queues (producers) ----------------
+[[queues.producers]]
+binding = "Q_NOTIFICATIONS"
+queue = "propflow360-notifications-dev"
+
+[[queues.producers]]
+binding = "Q_BILLING"
+queue = "propflow360-billing-dev"
+
+[[queues.producers]]
+binding = "Q_CALSYNC"
+queue = "propflow360-calsync-dev"
+
+# ---------------- Vars (non-secret) ----------------
+[vars]
+ENV = "dev"
+APP_BASE_URL = "http://localhost:5173"
+API_BASE_URL = "http://localhost:8787"
+
+# IMPORTANT: secrets set via `wrangler secret put ...`
+# JWT_SIGNING_KEY, SESSION_ENC_KEY, PAYMENTS_API_KEY, etc.

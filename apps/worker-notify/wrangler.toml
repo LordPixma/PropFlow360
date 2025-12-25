@@ -1,0 +1,22 @@
+name = "propflow360-worker-notify"
+main = "src/index.ts"
+compatibility_date = "2024-12-01"
+
+# Cron trigger - runs every minute
+[triggers]
+crons = ["* * * * *"]
+
+# D1 Database binding
+[[d1_databases]]
+binding = "DB_CORE"
+database_name = "propflow360-core"
+database_id = "your-d1-database-id"
+
+# Environment variables (set via wrangler secret put)
+# RESEND_API_KEY
+# TWILIO_ACCOUNT_SID (optional)
+# TWILIO_AUTH_TOKEN (optional)
+# TWILIO_FROM_NUMBER (optional)
+
+[build]
+command = "npm run typecheck"
