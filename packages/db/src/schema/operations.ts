@@ -1,6 +1,7 @@
 import { sqliteTable, text, integer, index } from 'drizzle-orm/sqlite-core';
 import { tenants } from './tenants';
-import { properties, units } from './properties';
+import { properties } from './properties';
+import { units } from './units';
 import { users } from './users';
 import { bookings } from './bookings';
 

@@ -38,8 +38,8 @@ import {
   FiChevronRight,
   FiCheck,
   FiMaximize,
-  FiBed,
-  FiDroplet,
+  FiSun,
+  FiCloud,
 } from 'react-icons/fi';
 
 // TODO: Replace with actual data from loader
@@ -221,21 +221,21 @@ export default function UnitDetail() {
                     <SimpleGrid columns={2} spacing={4}>
                       <Box>
                         <HStack color="gray.500" mb={1}>
-                          <Icon as={FiBed} />
+                          <Icon as={FiSun} />
                           <Text fontWeight="medium">Bedrooms</Text>
                         </HStack>
                         <Text>{unit.bedrooms === 0 ? 'Studio' : unit.bedrooms}</Text>
                       </Box>
                       <Box>
                         <HStack color="gray.500" mb={1}>
-                          <Icon as={FiBed} />
+                          <Icon as={FiSun} />
                           <Text fontWeight="medium">Beds</Text>
                         </HStack>
                         <Text>{unit.beds}</Text>
                       </Box>
                       <Box>
                         <HStack color="gray.500" mb={1}>
-                          <Icon as={FiDroplet} />
+                          <Icon as={FiCloud} />
                           <Text fontWeight="medium">Bathrooms</Text>
                         </HStack>
                         <Text>{unit.bathrooms}</Text>

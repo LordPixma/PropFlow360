@@ -11,25 +11,25 @@ compatibility_date = "2024-12-22"
 [[d1_databases]]
 binding = "DB_CORE"
 database_name = "propflow360-core-dev"
-database_id = "REPLACE_WITH_D1_ID"
+database_id = "ffa7a8e1-7523-4bda-b94d-8c804ef3b5b1"
 
 [[d1_databases]]
 binding = "DB_AUDIT"
 database_name = "propflow360-audit-dev"
-database_id = "REPLACE_WITH_D1_ID"
+database_id = "bba07279-ac23-43e1-a4e6-9b178dac3213"
 
 # ---------------- KV ----------------
 [[kv_namespaces]]
 binding = "KV_CONFIG"
-id = "REPLACE_WITH_KV_ID"
+id = "c4df501d38944a5c84064c60e96bab78"
 
 [[kv_namespaces]]
 binding = "KV_CACHE"
-id = "REPLACE_WITH_KV_ID"
+id = "3b64b712976242268f27cbe89fd2909d"
 
 [[kv_namespaces]]
 binding = "KV_SESSIONS"
-id = "REPLACE_WITH_KV_ID"
+id = "adf1826ab35d45b9a0064dfa960c786f"
 
 # ---------------- R2 ----------------
 [[r2_buckets]]

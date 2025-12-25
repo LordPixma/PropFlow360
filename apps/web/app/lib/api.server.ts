@@ -16,12 +16,16 @@ export interface ApiResponse<T> {
   };
 }
 
+// Default API URL for production
+const DEFAULT_API_URL = 'https://propflow360-api-dev.samuel-1e5.workers.dev';
+
 export class ApiClient {
   private baseUrl: string;
   private accessToken?: string;
 
   constructor(context: AppLoadContext, accessToken?: string) {
-    this.baseUrl = context.env.API_BASE_URL;
+    // Use env var if available, otherwise fall back to default
+    this.baseUrl = context.env?.API_BASE_URL || DEFAULT_API_URL;
     this.accessToken = accessToken;
   }
 
@@ -72,3 +76,6 @@ export class ApiClient {
 export function createApiClient(context: AppLoadContext, accessToken?: string): ApiClient {
   return new ApiClient(context, accessToken);
 }
+
+// Alias for backwards compatibility
+export const apiClient = createApiClient;

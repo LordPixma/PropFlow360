@@ -24,7 +24,7 @@ export interface SessionFlashData {
 }
 
 function createSessionStorage(context: AppLoadContext) {
-  const sessionSecret = context.env.SESSION_SECRET || 'default-secret-change-in-production';
+  const sessionSecret = context.env?.SESSION_SECRET || 'propflow360-session-secret-change-in-production';
 
   return createCookieSessionStorage<SessionData, SessionFlashData>({
     cookie: {

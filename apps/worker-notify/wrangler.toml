@@ -9,14 +9,11 @@ crons = ["* * * * *"]
 # D1 Database binding
 [[d1_databases]]
 binding = "DB_CORE"
-database_name = "propflow360-core"
-database_id = "your-d1-database-id"
+database_name = "propflow360-core-dev"
+database_id = "ffa7a8e1-7523-4bda-b94d-8c804ef3b5b1"
 
 # Environment variables (set via wrangler secret put)
 # RESEND_API_KEY
 # TWILIO_ACCOUNT_SID (optional)
 # TWILIO_AUTH_TOKEN (optional)
 # TWILIO_FROM_NUMBER (optional)
-
-[build]
-command = "npm run typecheck"

@@ -7,7 +7,7 @@ export default {
   fetch: app.fetch,
 } satisfies ExportedHandler<Env>;
 
-// Export Durable Object classes (to be implemented in packages/durable-objects)
-// export { UnitLock } from '@propflow360/durable-objects';
-// export { WebhookGuard } from '@propflow360/durable-objects';
-// export { TenantRateLimit } from '@propflow360/durable-objects';
+// Export Durable Object classes
+export { UnitLock } from '@propflow360/durable-objects';
+export { WebhookGuard } from '@propflow360/durable-objects';
+export { TenantRateLimit } from '@propflow360/durable-objects';

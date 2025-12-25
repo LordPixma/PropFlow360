@@ -63,3 +63,18 @@ export function internalError(c: Context, message: string = 'Internal server err
 export function validationError(c: Context, errors: Record<string, string[]>) {
   return error(c, 'VALIDATION_ERROR', 'Validation failed', 400, { errors });
 }
+
+export function paginated<T>(
+  c: Context,
+  data: T[],
+  page: number,
+  limit: number,
+  total: number
+) {
+  return success(c, data, {
+    page,
+    limit,
+    total,
+    totalPages: Math.ceil(total / limit),
+  });
+}
