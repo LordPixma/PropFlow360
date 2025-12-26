@@ -1,5 +1,4 @@
 import { cors } from 'hono/cors';
-import type { AppEnv } from '../lib/context';
 
 export const corsMiddleware = cors({
   origin: (origin, c) => {

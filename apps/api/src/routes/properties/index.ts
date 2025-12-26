@@ -9,7 +9,7 @@ import {
 } from '@propflow360/validators';
 import { properties } from '@propflow360/db/schema';
 import type { AppEnv } from '../../lib/context';
-import { success, created, noContent, notFound, badRequest } from '../../lib/responses';
+import { success, created, noContent, notFound } from '../../lib/responses';
 import { authMiddleware, requirePermission } from '../../middleware/auth';
 import { tenancyMiddleware, requireTenant } from '../../middleware/tenancy';
 

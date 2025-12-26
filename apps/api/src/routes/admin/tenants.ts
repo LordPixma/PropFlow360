@@ -4,7 +4,7 @@
 
 import { Hono } from 'hono';
 import { drizzle } from 'drizzle-orm/d1';
-import { tenants, tenantSettings, users } from '@propflow360/db';
+import { tenants, tenantSettings } from '@propflow360/db';
 import { eq, desc } from 'drizzle-orm';
 import type { HonoEnv } from '../../types';
 

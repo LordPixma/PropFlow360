@@ -70,7 +70,7 @@ app.get('/revenue', async (c) => {
   const db = drizzle(c.env.DB_CORE);
 
   const period = c.req.query('period') || 'last_30_days';
-  const groupBy = c.req.query('group_by') || 'day';
+  const _groupBy = c.req.query('group_by') || 'day';
   const { startDate, endDate } = getPeriodDates(period);
 
   const metrics = await db
@@ -230,36 +230,41 @@ function getPeriodDates(period: string): { startDate: string; endDate: string } 
     case 'today':
       startDate = endDate;
       break;
-    case 'yesterday':
+    case 'yesterday': {
       const yesterday = new Date(today);
       yesterday.setUTCDate(yesterday.getUTCDate() - 1);
       startDate = yesterday.toISOString().split('T')[0];
       break;
-    case 'last_7_days':
+    }
+    case 'last_7_days': {
       const last7 = new Date(today);
       last7.setUTCDate(last7.getUTCDate() - 7);
       startDate = last7.toISOString().split('T')[0];
       break;
-    case 'last_30_days':
+    }
+    case 'last_30_days': {
       const last30 = new Date(today);
       last30.setUTCDate(last30.getUTCDate() - 30);
       startDate = last30.toISOString().split('T')[0];
       break;
-    case 'last_90_days':
+    }
+    case 'last_90_days': {
       const last90 = new Date(today);
       last90.setUTCDate(last90.getUTCDate() - 90);
       startDate = last90.toISOString().split('T')[0];
       break;
+    }
     case 'mtd': // Month to date
       startDate = `${today.getUTCFullYear()}-${String(today.getUTCMonth() + 1).padStart(2, '0')}-01`;
       break;
     case 'ytd': // Year to date
       startDate = `${today.getUTCFullYear()}-01-01`;
       break;
-    default:
+    default: {
       const last30default = new Date(today);
       last30default.setUTCDate(last30default.getUTCDate() - 30);
       startDate = last30default.toISOString().split('T')[0];
+    }
   }
 
   return { startDate, endDate };

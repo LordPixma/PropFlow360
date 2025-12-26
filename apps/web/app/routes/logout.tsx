@@ -2,7 +2,7 @@ import type { ActionFunctionArgs, LoaderFunctionArgs } from '@remix-run/cloudfla
 import { redirect } from '@remix-run/cloudflare';
 import { destroySession, getSession } from '~/lib/session.server';
 
-export async function loader({ request, context }: LoaderFunctionArgs) {
+export async function loader(_args: LoaderFunctionArgs) {
   return redirect('/login');
 }
 

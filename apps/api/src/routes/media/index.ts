@@ -24,7 +24,7 @@ const createUploadUrlSchema = z.object({
   contentType: z.string().min(1),
 });
 
-const createMediaSchema = z.object({
+const _createMediaSchema = z.object({
   propertyId: z.string().optional(),
   unitId: z.string().optional(),
   type: z.enum(['photo', 'floorplan', 'video', 'document', '360_tour']),

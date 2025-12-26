@@ -3,9 +3,7 @@ import {
   Grid,
   GridItem,
   Text,
-  HStack,
   VStack,
-  Badge,
   Tooltip,
   useColorModeValue,
 } from '@chakra-ui/react';

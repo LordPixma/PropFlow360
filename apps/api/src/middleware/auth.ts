@@ -1,5 +1,5 @@
 import { createMiddleware } from 'hono/factory';
-import { createJWTService, getPermissionsForRole, type Permission } from '@propflow360/auth';
+import { createJWTService, type Permission } from '@propflow360/auth';
 import type { AppEnv, SessionData } from '../lib/context';
 import { unauthorized, forbidden } from '../lib/responses';
 

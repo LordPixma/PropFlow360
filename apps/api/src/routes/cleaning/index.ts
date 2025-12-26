@@ -18,7 +18,6 @@ import {
   properties,
   units,
   vendors,
-  bookings,
 } from '@propflow360/db';
 import { eq, and, desc, sql, gte, lte } from 'drizzle-orm';
 
@@ -248,7 +247,6 @@ cleaningRouter.patch('/schedules/:id', zValidator('json', updateCleaningSchedule
 // Complete cleaning
 cleaningRouter.post('/schedules/:id/complete', zValidator('json', completeCleaningSchema), async (c) => {
   const tenantId = c.get('tenantId');
-  const userId = c.get('userId');
   const db = c.get('db');
   const scheduleId = c.req.param('id');
   const data = c.req.valid('json');

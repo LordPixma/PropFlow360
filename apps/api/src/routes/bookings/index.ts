@@ -6,12 +6,8 @@ import { success, error, notFound, conflict, paginated } from '../../lib/respons
 import {
   createBookingSchema,
   updateBookingSchema,
-  confirmBookingSchema,
   cancelBookingSchema,
-  checkInSchema,
-  checkOutSchema,
   listBookingsSchema,
-  createGuestSchema,
 } from '@propflow360/validators';
 import { queueNotification, NotificationEvents } from '@propflow360/notifications';
 import { drizzle } from 'drizzle-orm/d1';
@@ -182,7 +178,6 @@ bookingsRouter.get('/:id', requireTenant, requirePermission('bookings:read'), as
 bookingsRouter.post('/', requireTenant, requirePermission('bookings:write'), async (c) => {
   const db = c.get('db');
   const tenantId = c.get('tenantId')!;
-  const userId = c.get('session')?.userId;
 
   const body = await c.req.json();
   const parsed = createBookingSchema.safeParse(body);

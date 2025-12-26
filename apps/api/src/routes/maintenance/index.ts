@@ -18,7 +18,7 @@ import {
   vendors,
   users,
 } from '@propflow360/db';
-import { eq, and, desc, sql, gte, lte } from 'drizzle-orm';
+import { eq, and, desc, sql } from 'drizzle-orm';
 
 export const maintenanceRouter = new Hono<AppEnv>();
 

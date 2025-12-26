@@ -1,5 +1,5 @@
 import type { Context } from 'hono';
-import type { ApiResponse, ApiError, ApiMeta } from '@propflow360/types';
+import type { ApiResponse, ApiMeta } from '@propflow360/types';
 
 export function success<T>(c: Context, data: T, meta?: ApiMeta, status: number = 200) {
   const response: ApiResponse<T> = {

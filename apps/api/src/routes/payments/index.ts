@@ -6,7 +6,6 @@ import { generateId } from '../../lib/id';
 import {
   createInvoiceSchema,
   updateInvoiceSchema,
-  sendInvoiceSchema,
   createPaymentIntentSchema,
   recordPaymentSchema,
   createRefundSchema,
@@ -20,7 +19,6 @@ import {
   paymentProviders,
   guests,
   bookings,
-  leases,
 } from '@propflow360/db';
 import { eq, and, desc, sql, gte, lte } from 'drizzle-orm';
 import { createPaymentProvider } from '@propflow360/payments';

@@ -65,7 +65,7 @@ export async function loader({ request, context, params }: LoaderFunctionArgs) {
     }
 
     return json<LoaderData>({ property: null, error: 'Property not found' });
-  } catch (error) {
+  } catch {
     return json<LoaderData>({ property: null, error: 'Failed to load property' });
   }
 }
