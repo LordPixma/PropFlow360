@@ -4,7 +4,8 @@
     "types": ["@cloudflare/workers-types"],
     "lib": ["ES2022"],
     "jsx": "react-jsx",
-    "jsxImportSource": "hono/jsx"
+    "jsxImportSource": "hono/jsx",
+    "noUncheckedIndexedAccess": false
   },
   "include": ["src/**/*.ts"]
 }

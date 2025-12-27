@@ -20,8 +20,9 @@ export class ICalProvider implements ChannelProvider {
   private listingName: string;
 
   constructor(config: ChannelConfig) {
-    this.icalUrl = config.credentials.icalUrl;
-    this.listingName = config.credentials.listingName || 'iCal Import';
+    const creds = config.credentials as Record<string, string>;
+    this.icalUrl = creds.icalUrl ?? '';
+    this.listingName = creds.listingName ?? 'iCal Import';
   }
 
   /**
@@ -112,7 +113,7 @@ export class ICalProvider implements ChannelProvider {
     const dates: Array<{ date: string; available: boolean }> = [];
 
     for (let d = new Date(start); d <= end; d.setDate(d.getDate() + 1)) {
-      const dateStr = d.toISOString().split('T')[0];
+      const dateStr = d.toISOString().substring(0, 10); // YYYY-MM-DD format
 
       // Check if date is blocked by any event
       const isBlocked = result.events.some(event => {

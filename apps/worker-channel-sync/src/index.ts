@@ -201,7 +201,7 @@ async function syncConnection(db: any, connection: any): Promise<any> {
       .set({
         lastSyncAt: now,
         lastSyncStatus: stats.failed > 0 ? 'partial' : 'success',
-        lastSyncError: errors.length > 0 ? errors[0].error : null,
+        lastSyncError: errors.length > 0 ? errors[0]?.error ?? null : null,
         nextSyncAt,
         updatedAt: completedAt,
       })

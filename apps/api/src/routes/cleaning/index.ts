@@ -32,7 +32,7 @@ cleaningRouter.use('*', requireAuth);
 
 // List schedules
 cleaningRouter.get('/schedules', zValidator('query', listCleaningSchedulesSchema), async (c) => {
-  const tenantId = c.get('tenantId');
+  const tenantId = c.get('tenantId')!;
   const db = c.get('db');
   const query = c.req.valid('query');
 
@@ -94,7 +94,7 @@ cleaningRouter.get('/schedules', zValidator('query', listCleaningSchedulesSchema
 
 // Get schedule by ID
 cleaningRouter.get('/schedules/:id', async (c) => {
-  const tenantId = c.get('tenantId');
+  const tenantId = c.get('tenantId')!;
   const db = c.get('db');
   const scheduleId = c.req.param('id');
 
@@ -127,7 +127,7 @@ cleaningRouter.get('/schedules/:id', async (c) => {
 
 // Create schedule
 cleaningRouter.post('/schedules', zValidator('json', createCleaningScheduleSchema), async (c) => {
-  const tenantId = c.get('tenantId');
+  const tenantId = c.get('tenantId')!;
   const db = c.get('db');
   const data = c.req.valid('json');
   const now = new Date().toISOString();
@@ -193,7 +193,7 @@ cleaningRouter.post('/schedules', zValidator('json', createCleaningScheduleSchem
 
 // Update schedule
 cleaningRouter.patch('/schedules/:id', zValidator('json', updateCleaningScheduleSchema), async (c) => {
-  const tenantId = c.get('tenantId');
+  const tenantId = c.get('tenantId')!;
   const db = c.get('db');
   const scheduleId = c.req.param('id');
   const data = c.req.valid('json');
@@ -246,7 +246,7 @@ cleaningRouter.patch('/schedules/:id', zValidator('json', updateCleaningSchedule
 
 // Complete cleaning
 cleaningRouter.post('/schedules/:id/complete', zValidator('json', completeCleaningSchema), async (c) => {
-  const tenantId = c.get('tenantId');
+  const tenantId = c.get('tenantId')!;
   const db = c.get('db');
   const scheduleId = c.req.param('id');
   const data = c.req.valid('json');
@@ -282,7 +282,7 @@ cleaningRouter.post('/schedules/:id/complete', zValidator('json', completeCleani
 
 // Cancel schedule
 cleaningRouter.post('/schedules/:id/cancel', async (c) => {
-  const tenantId = c.get('tenantId');
+  const tenantId = c.get('tenantId')!;
   const db = c.get('db');
   const scheduleId = c.req.param('id');
   const now = new Date().toISOString();
@@ -314,7 +314,7 @@ cleaningRouter.post('/schedules/:id/cancel', async (c) => {
 
 // List templates
 cleaningRouter.get('/checklists', zValidator('query', listChecklistTemplatesSchema), async (c) => {
-  const tenantId = c.get('tenantId');
+  const tenantId = c.get('tenantId')!;
   const db = c.get('db');
   const query = c.req.valid('query');
 
@@ -355,7 +355,7 @@ cleaningRouter.get('/checklists', zValidator('query', listChecklistTemplatesSche
 
 // Get template by ID
 cleaningRouter.get('/checklists/:id', async (c) => {
-  const tenantId = c.get('tenantId');
+  const tenantId = c.get('tenantId')!;
   const db = c.get('db');
   const templateId = c.req.param('id');
 
@@ -373,7 +373,7 @@ cleaningRouter.get('/checklists/:id', async (c) => {
 
 // Create template
 cleaningRouter.post('/checklists', zValidator('json', createChecklistTemplateSchema), async (c) => {
-  const tenantId = c.get('tenantId');
+  const tenantId = c.get('tenantId')!;
   const db = c.get('db');
   const data = c.req.valid('json');
   const now = new Date().toISOString();
@@ -401,7 +401,7 @@ cleaningRouter.post('/checklists', zValidator('json', createChecklistTemplateSch
 
 // Update template
 cleaningRouter.patch('/checklists/:id', zValidator('json', updateChecklistTemplateSchema), async (c) => {
-  const tenantId = c.get('tenantId');
+  const tenantId = c.get('tenantId')!;
   const db = c.get('db');
   const templateId = c.req.param('id');
   const data = c.req.valid('json');

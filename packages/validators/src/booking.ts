@@ -16,8 +16,8 @@ export const bookingStatusSchema = z.enum([
   'no_show',
 ]);
 
-// Payment status
-export const paymentStatusSchema = z.enum([
+// Booking payment status (the payment state of a booking)
+export const bookingPaymentStatusSchema = z.enum([
   'unpaid',
   'partial',
   'paid',
@@ -256,7 +256,7 @@ export type UpdateLeaseInput = z.infer<typeof updateLeaseSchema>;
 export type TerminateLeaseInput = z.infer<typeof terminateLeaseSchema>;
 export type ListLeasesInput = z.infer<typeof listLeasesSchema>;
 export type BookingStatus = z.infer<typeof bookingStatusSchema>;
-export type PaymentStatus = z.infer<typeof paymentStatusSchema>;
+export type BookingPaymentStatus = z.infer<typeof bookingPaymentStatusSchema>;
 export type BookingSource = z.infer<typeof bookingSourceSchema>;
 export type LeaseStatus = z.infer<typeof leaseStatusSchema>;
 export type LeaseType = z.infer<typeof leaseTypeSchema>;

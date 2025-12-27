@@ -275,8 +275,8 @@ export const webhookDeliveries = sqliteTable('webhook_deliveries', {
   createdAt: text('created_at').notNull(),
 });
 
-export type TenantSettings = typeof tenantSettings.$inferSelect;
-export type NewTenantSettings = typeof tenantSettings.$inferInsert;
+export type TenantSettingsRow = typeof tenantSettings.$inferSelect;
+export type NewTenantSettingsRow = typeof tenantSettings.$inferInsert;
 
 export type AuditLog = typeof auditLogs.$inferSelect;
 export type NewAuditLog = typeof auditLogs.$inferInsert;

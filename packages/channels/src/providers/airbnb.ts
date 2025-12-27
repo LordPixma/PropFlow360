@@ -19,12 +19,17 @@ export class AirbnbProvider implements ChannelProvider {
   private accessToken: string;
   private refreshToken?: string;
   private expiresAt?: string;
+  private clientId?: string;
+  private clientSecret?: string;
   private readonly baseUrl = 'https://api.airbnb.com/v2';
 
   constructor(config: ChannelConfig) {
-    this.accessToken = config.credentials.accessToken;
-    this.refreshToken = config.credentials.refreshToken;
-    this.expiresAt = config.credentials.expiresAt;
+    const creds = config.credentials as Record<string, string>;
+    this.accessToken = creds.accessToken ?? '';
+    this.refreshToken = creds.refreshToken;
+    this.expiresAt = creds.expiresAt;
+    this.clientId = creds.clientId;
+    this.clientSecret = creds.clientSecret;
   }
 
   /**
@@ -52,7 +57,7 @@ export class AirbnbProvider implements ChannelProvider {
       throw new Error(`Airbnb API error (${response.status}): ${error}`);
     }
 
-    return response.json();
+    return response.json() as T;
   }
 
   /**
@@ -84,8 +89,8 @@ export class AirbnbProvider implements ChannelProvider {
       body: JSON.stringify({
         grant_type: 'refresh_token',
         refresh_token: this.refreshToken,
-        client_id: process.env.AIRBNB_CLIENT_ID,
-        client_secret: process.env.AIRBNB_CLIENT_SECRET,
+        client_id: this.clientId,
+        client_secret: this.clientSecret,
       }),
     });
 

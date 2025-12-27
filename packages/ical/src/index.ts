@@ -50,9 +50,10 @@ export async function parseICalFeed(source: string | URL): Promise<ParsedICalFee
     const jcalData = ICAL.parse(icalData);
     const comp = new ICAL.Component(jcalData);
 
-    // Get calendar name
-    calendarName = comp.getFirstPropertyValue('x-wr-calname') ||
-                   comp.getFirstPropertyValue('name');
+    // Get calendar name - getFirstPropertyValue returns any type
+    const calNameValue = comp.getFirstPropertyValue('x-wr-calname') ||
+                         comp.getFirstPropertyValue('name');
+    calendarName = typeof calNameValue === 'string' ? calNameValue : undefined;
 
     // Parse events
     const vevents = comp.getAllSubcomponents('vevent');
@@ -74,9 +75,15 @@ export async function parseICalFeed(source: string | URL): Promise<ParsedICalFee
           continue;
         }
 
-        // Convert to ISO dates
-        const start = startDate.toJSDate().toISOString().split('T')[0];
-        const end = endDate.toJSDate().toISOString().split('T')[0];
+        // Convert to ISO dates (YYYY-MM-DD format)
+        const startIso = startDate.toJSDate().toISOString();
+        const endIso = endDate.toJSDate().toISOString();
+        const start = startIso.substring(0, 10); // Extract YYYY-MM-DD
+        const end = endIso.substring(0, 10);
+
+        // Get url and status from the component directly since they're not on Event type
+        const urlProp = vevent.getFirstPropertyValue('url');
+        const statusProp = vevent.getFirstPropertyValue('status');
 
         events.push({
           uid,
@@ -84,10 +91,10 @@ export async function parseICalFeed(source: string | URL): Promise<ParsedICalFee
           description,
           startDate: start,
           endDate: end,
-          url: event.url,
-          location: event.location,
-          organizer: event.organizer,
-          status: event.status as any,
+          url: typeof urlProp === 'string' ? urlProp : undefined,
+          location: event.location || undefined,
+          organizer: event.organizer || undefined,
+          status: typeof statusProp === 'string' ? statusProp as ICalEvent['status'] : undefined,
         });
       } catch (err) {
         errors.push(`Failed to parse event: ${err instanceof Error ? err.message : 'Unknown error'}`);
@@ -160,12 +167,12 @@ export function generateICalFeed(options: GenerateICalOptions): string {
       vevent.updatePropertyWithValue('description', eventData.description);
     }
 
-    // Create dates (all-day events)
-    const dtstart = ICAL.Time.fromString(eventData.startDate);
+    // Create dates (all-day events) - ICAL.Time.fromString requires timezone
+    const dtstart = ICAL.Time.fromDateString(eventData.startDate);
     dtstart.isDate = true; // Mark as all-day event
     vevent.updatePropertyWithValue('dtstart', dtstart);
 
-    const dtend = ICAL.Time.fromString(eventData.endDate);
+    const dtend = ICAL.Time.fromDateString(eventData.endDate);
     dtend.isDate = true;
     vevent.updatePropertyWithValue('dtend', dtend);
 
@@ -186,12 +193,12 @@ export function generateICalFeed(options: GenerateICalOptions): string {
     vevent.updatePropertyWithValue('dtstamp', now);
 
     if (eventData.created) {
-      const created = ICAL.Time.fromString(eventData.created);
+      const created = ICAL.Time.fromDateTimeString(eventData.created);
       vevent.updatePropertyWithValue('created', created);
     }
 
     if (eventData.modified) {
-      const modified = ICAL.Time.fromString(eventData.modified);
+      const modified = ICAL.Time.fromDateTimeString(eventData.modified);
       vevent.updatePropertyWithValue('last-modified', modified);
     } else {
       vevent.updatePropertyWithValue('last-modified', now);

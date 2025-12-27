@@ -34,7 +34,7 @@ paymentsRouter.use('*', requireAuth);
 
 // List invoices
 paymentsRouter.get('/invoices', zValidator('query', listInvoicesSchema), async (c) => {
-  const tenantId = c.get('tenantId');
+  const tenantId = c.get('tenantId')!;
   const db = c.get('db');
   const query = c.req.valid('query');
 
@@ -49,7 +49,7 @@ paymentsRouter.get('/invoices', zValidator('query', listInvoicesSchema), async (
   if (query.endDate) conditions.push(lte(invoices.issueDate, query.endDate));
 
   if (query.overdue) {
-    const today = new Date().toISOString().split('T')[0];
+    const today = new Date().toISOString().substring(0, 10);
     conditions.push(lte(invoices.dueDate, today));
     conditions.push(sql`${invoices.status} NOT IN ('paid', 'cancelled', 'refunded')`);
   }
@@ -98,7 +98,7 @@ paymentsRouter.get('/invoices', zValidator('query', listInvoicesSchema), async (
 
 // Get invoice by ID
 paymentsRouter.get('/invoices/:id', async (c) => {
-  const tenantId = c.get('tenantId');
+  const tenantId = c.get('tenantId')!;
   const db = c.get('db');
   const invoiceId = c.req.param('id');
 
@@ -133,7 +133,7 @@ paymentsRouter.get('/invoices/:id', async (c) => {
 
 // Create invoice
 paymentsRouter.post('/invoices', zValidator('json', createInvoiceSchema), async (c) => {
-  const tenantId = c.get('tenantId');
+  const tenantId = c.get('tenantId')!;
   const db = c.get('db');
   const data = c.req.valid('json');
   const now = new Date().toISOString();
@@ -207,7 +207,7 @@ paymentsRouter.post('/invoices', zValidator('json', createInvoiceSchema), async 
 
 // Update invoice
 paymentsRouter.patch('/invoices/:id', zValidator('json', updateInvoiceSchema), async (c) => {
-  const tenantId = c.get('tenantId');
+  const tenantId = c.get('tenantId')!;
   const db = c.get('db');
   const invoiceId = c.req.param('id');
   const data = c.req.valid('json');
@@ -272,7 +272,7 @@ paymentsRouter.patch('/invoices/:id', zValidator('json', updateInvoiceSchema), a
 
 // Send invoice
 paymentsRouter.post('/invoices/:id/send', async (c) => {
-  const tenantId = c.get('tenantId');
+  const tenantId = c.get('tenantId')!;
   const db = c.get('db');
   const invoiceId = c.req.param('id');
   const now = new Date().toISOString();
@@ -302,7 +302,7 @@ paymentsRouter.post('/invoices/:id/send', async (c) => {
 
 // Cancel invoice
 paymentsRouter.post('/invoices/:id/cancel', async (c) => {
-  const tenantId = c.get('tenantId');
+  const tenantId = c.get('tenantId')!;
   const db = c.get('db');
   const invoiceId = c.req.param('id');
   const now = new Date().toISOString();
@@ -337,7 +337,7 @@ paymentsRouter.post(
   '/payment-intents',
   zValidator('json', createPaymentIntentSchema),
   async (c) => {
-    const tenantId = c.get('tenantId');
+    const tenantId = c.get('tenantId')!;
     const db = c.get('db');
     const data = c.req.valid('json');
 
@@ -418,7 +418,7 @@ paymentsRouter.post(
 
 // List payments
 paymentsRouter.get('/payments', zValidator('query', listPaymentsSchema), async (c) => {
-  const tenantId = c.get('tenantId');
+  const tenantId = c.get('tenantId')!;
   const db = c.get('db');
   const query = c.req.valid('query');
 
@@ -467,7 +467,7 @@ paymentsRouter.get('/payments', zValidator('query', listPaymentsSchema), async (
 
 // Record manual payment
 paymentsRouter.post('/payments', zValidator('json', recordPaymentSchema), async (c) => {
-  const tenantId = c.get('tenantId');
+  const tenantId = c.get('tenantId')!;
   const db = c.get('db');
   const data = c.req.valid('json');
   const now = new Date().toISOString();
@@ -545,7 +545,7 @@ paymentsRouter.post('/payments', zValidator('json', recordPaymentSchema), async 
 
 // Create refund
 paymentsRouter.post('/refunds', zValidator('json', createRefundSchema), async (c) => {
-  const tenantId = c.get('tenantId');
+  const tenantId = c.get('tenantId')!;
   const db = c.get('db');
   const data = c.req.valid('json');
   const now = new Date().toISOString();
@@ -675,7 +675,7 @@ paymentsRouter.post('/refunds', zValidator('json', createRefundSchema), async (c
 
 // List refunds for a payment
 paymentsRouter.get('/payments/:id/refunds', async (c) => {
-  const tenantId = c.get('tenantId');
+  const tenantId = c.get('tenantId')!;
   const db = c.get('db');
   const paymentId = c.req.param('id');
 

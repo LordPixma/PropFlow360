@@ -18,7 +18,7 @@ vendorsRouter.use('*', requireAuth);
 
 // List vendors
 vendorsRouter.get('/', zValidator('query', listVendorsSchema), async (c) => {
-  const tenantId = c.get('tenantId');
+  const tenantId = c.get('tenantId')!;
   const db = c.get('db');
   const query = c.req.valid('query');
 
@@ -59,7 +59,7 @@ vendorsRouter.get('/', zValidator('query', listVendorsSchema), async (c) => {
 
 // Get vendor by ID
 vendorsRouter.get('/:id', async (c) => {
-  const tenantId = c.get('tenantId');
+  const tenantId = c.get('tenantId')!;
   const db = c.get('db');
   const vendorId = c.req.param('id');
 
@@ -77,7 +77,7 @@ vendorsRouter.get('/:id', async (c) => {
 
 // Create vendor
 vendorsRouter.post('/', zValidator('json', createVendorSchema), async (c) => {
-  const tenantId = c.get('tenantId');
+  const tenantId = c.get('tenantId')!;
   const db = c.get('db');
   const data = c.req.valid('json');
   const now = new Date().toISOString();
@@ -111,7 +111,7 @@ vendorsRouter.post('/', zValidator('json', createVendorSchema), async (c) => {
 
 // Update vendor
 vendorsRouter.patch('/:id', zValidator('json', updateVendorSchema), async (c) => {
-  const tenantId = c.get('tenantId');
+  const tenantId = c.get('tenantId')!;
   const db = c.get('db');
   const vendorId = c.req.param('id');
   const data = c.req.valid('json');
@@ -150,7 +150,7 @@ vendorsRouter.patch('/:id', zValidator('json', updateVendorSchema), async (c) =>
 
 // Deactivate vendor
 vendorsRouter.post('/:id/deactivate', async (c) => {
-  const tenantId = c.get('tenantId');
+  const tenantId = c.get('tenantId')!;
   const db = c.get('db');
   const vendorId = c.req.param('id');
   const now = new Date().toISOString();
@@ -174,7 +174,7 @@ vendorsRouter.post('/:id/deactivate', async (c) => {
 
 // Reactivate vendor
 vendorsRouter.post('/:id/activate', async (c) => {
-  const tenantId = c.get('tenantId');
+  const tenantId = c.get('tenantId')!;
   const db = c.get('db');
   const vendorId = c.req.param('id');
   const now = new Date().toISOString();

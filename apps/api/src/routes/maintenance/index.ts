@@ -31,7 +31,7 @@ maintenanceRouter.use('*', requireAuth);
 
 // List tickets
 maintenanceRouter.get('/', zValidator('query', listMaintenanceTicketsSchema), async (c) => {
-  const tenantId = c.get('tenantId');
+  const tenantId = c.get('tenantId')!;
   const db = c.get('db');
   const query = c.req.valid('query');
 
@@ -95,7 +95,7 @@ maintenanceRouter.get('/', zValidator('query', listMaintenanceTicketsSchema), as
 
 // Get ticket by ID
 maintenanceRouter.get('/:id', async (c) => {
-  const tenantId = c.get('tenantId');
+  const tenantId = c.get('tenantId')!;
   const db = c.get('db');
   const ticketId = c.req.param('id');
 
@@ -150,7 +150,7 @@ maintenanceRouter.get('/:id', async (c) => {
 
 // Create ticket
 maintenanceRouter.post('/', zValidator('json', createMaintenanceTicketSchema), async (c) => {
-  const tenantId = c.get('tenantId');
+  const tenantId = c.get('tenantId')!;
   const userId = c.get('userId');
   const db = c.get('db');
   const data = c.req.valid('json');
@@ -212,7 +212,7 @@ maintenanceRouter.post('/', zValidator('json', createMaintenanceTicketSchema), a
 
 // Update ticket
 maintenanceRouter.patch('/:id', zValidator('json', updateMaintenanceTicketSchema), async (c) => {
-  const tenantId = c.get('tenantId');
+  const tenantId = c.get('tenantId')!;
   const db = c.get('db');
   const ticketId = c.req.param('id');
   const data = c.req.valid('json');
@@ -255,7 +255,7 @@ maintenanceRouter.patch('/:id', zValidator('json', updateMaintenanceTicketSchema
 
 // Assign ticket
 maintenanceRouter.post('/:id/assign', zValidator('json', assignMaintenanceTicketSchema), async (c) => {
-  const tenantId = c.get('tenantId');
+  const tenantId = c.get('tenantId')!;
   const userId = c.get('userId');
   const db = c.get('db');
   const ticketId = c.req.param('id');
@@ -300,7 +300,7 @@ maintenanceRouter.post('/:id/assign', zValidator('json', assignMaintenanceTicket
 
 // Add comment
 maintenanceRouter.post('/:id/comments', zValidator('json', addMaintenanceCommentSchema), async (c) => {
-  const tenantId = c.get('tenantId');
+  const tenantId = c.get('tenantId')!;
   const userId = c.get('userId');
   const db = c.get('db');
   const ticketId = c.req.param('id');
@@ -337,7 +337,7 @@ maintenanceRouter.post('/:id/comments', zValidator('json', addMaintenanceComment
 
 // Close ticket
 maintenanceRouter.post('/:id/close', async (c) => {
-  const tenantId = c.get('tenantId');
+  const tenantId = c.get('tenantId')!;
   const userId = c.get('userId');
   const db = c.get('db');
   const ticketId = c.req.param('id');

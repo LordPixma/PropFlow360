@@ -144,11 +144,11 @@ icsRouter.get('/:unitId/:token', async (c) => {
 
     // Get availability blocks for the next year
     const now = new Date();
-    const startDate = now.toISOString().split('T')[0];
+    const startDate = now.toISOString().substring(0, 10);
     // endDate calculated but not used in query (uses startDate for comparison)
     const _endDate = new Date(now.getFullYear() + 1, now.getMonth(), now.getDate())
       .toISOString()
-      .split('T')[0];
+      .substring(0, 10);
 
     const blocks = await db
       .prepare(

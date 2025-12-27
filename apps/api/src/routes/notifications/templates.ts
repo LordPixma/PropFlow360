@@ -3,17 +3,17 @@
  */
 
 import { Hono } from 'hono';
-import { drizzle } from 'drizzle-orm/d1';
 import { notificationTemplates } from '@propflow360/db';
 import { eq, and } from 'drizzle-orm';
-import type { HonoEnv } from '../../types';
+import type { AppEnv } from '../../lib/context';
+import { generateId } from '../../lib/id';
 
-const app = new Hono<HonoEnv>();
+const app = new Hono<AppEnv>();
 
 // List notification templates
 app.get('/', async (c) => {
-  const { tenantId } = c.get('auth');
-  const db = drizzle(c.env.DB_CORE);
+  const tenantId = c.get('tenantId')!;
+  const db = c.get('db');
 
   const event = c.req.query('event');
   const isActive = c.req.query('is_active');
@@ -25,7 +25,7 @@ app.get('/', async (c) => {
   }
 
   if (isActive !== undefined) {
-    conditions.push(eq(notificationTemplates.isActive, isActive === 'true' ? 1 : 0));
+    conditions.push(eq(notificationTemplates.isActive, isActive === 'true'));
   }
 
   const templates = await db
@@ -38,9 +38,9 @@ app.get('/', async (c) => {
 
 // Get single template
 app.get('/:id', async (c) => {
-  const { tenantId } = c.get('auth');
-  const { id } = c.param();
-  const db = drizzle(c.env.DB_CORE);
+  const tenantId = c.get('tenantId')!;
+  const id = c.req.param('id');
+  const db = c.get('db');
 
   const [template] = await db
     .select()
@@ -62,8 +62,8 @@ app.get('/:id', async (c) => {
 
 // Create notification template
 app.post('/', async (c) => {
-  const { tenantId } = c.get('auth');
-  const db = drizzle(c.env.DB_CORE);
+  const tenantId = c.get('tenantId')!;
+  const db = c.get('db');
 
   const body = await c.req.json();
   const {
@@ -91,7 +91,7 @@ app.post('/', async (c) => {
     return c.json({ error: 'SMS template requires body' }, 400);
   }
 
-  const templateId = `ntpl_${crypto.randomUUID().replace(/-/g, '').substring(0, 16)}`;
+  const templateId = generateId('ntpl');
   const now = new Date().toISOString();
 
   await db.insert(notificationTemplates).values({
@@ -105,8 +105,8 @@ app.post('/', async (c) => {
     emailBody: emailBody || null,
     emailTemplate: emailTemplate || null,
     smsBody: smsBody || null,
-    isActive: isActive ? 1 : 0,
-    isDefault: isDefault ? 1 : 0,
+    isActive: Boolean(isActive),
+    isDefault: Boolean(isDefault),
     createdAt: now,
     updatedAt: now,
   });
@@ -122,9 +122,9 @@ app.post('/', async (c) => {
 
 // Update notification template
 app.patch('/:id', async (c) => {
-  const { tenantId } = c.get('auth');
-  const { id } = c.param();
-  const db = drizzle(c.env.DB_CORE);
+  const tenantId = c.get('tenantId')!;
+  const id = c.req.param('id');
+  const db = c.get('db');
 
   const [existing] = await db
     .select()
@@ -168,8 +168,8 @@ app.patch('/:id', async (c) => {
       emailBody: emailBody !== undefined ? emailBody : existing.emailBody,
       emailTemplate: emailTemplate !== undefined ? emailTemplate : existing.emailTemplate,
       smsBody: smsBody !== undefined ? smsBody : existing.smsBody,
-      isActive: isActive !== undefined ? (isActive ? 1 : 0) : existing.isActive,
-      isDefault: isDefault !== undefined ? (isDefault ? 1 : 0) : existing.isDefault,
+      isActive: isActive !== undefined ? Boolean(isActive) : existing.isActive,
+      isDefault: isDefault !== undefined ? Boolean(isDefault) : existing.isDefault,
       updatedAt: now,
     })
     .where(eq(notificationTemplates.id, id));
@@ -185,9 +185,9 @@ app.patch('/:id', async (c) => {
 
 // Delete notification template
 app.delete('/:id', async (c) => {
-  const { tenantId } = c.get('auth');
-  const { id } = c.param();
-  const db = drizzle(c.env.DB_CORE);
+  const tenantId = c.get('tenantId')!;
+  const id = c.req.param('id');
+  const db = c.get('db');
 
   const [existing] = await db
     .select()
@@ -211,9 +211,9 @@ app.delete('/:id', async (c) => {
 
 // Toggle template active status
 app.post('/:id/toggle', async (c) => {
-  const { tenantId } = c.get('auth');
-  const { id } = c.param();
-  const db = drizzle(c.env.DB_CORE);
+  const tenantId = c.get('tenantId')!;
+  const id = c.req.param('id');
+  const db = c.get('db');
 
   const [existing] = await db
     .select()
@@ -231,7 +231,7 @@ app.post('/:id/toggle', async (c) => {
   }
 
   const now = new Date().toISOString();
-  const newStatus = existing.isActive === 1 ? 0 : 1;
+  const newStatus = !existing.isActive;
 
   await db
     .update(notificationTemplates)

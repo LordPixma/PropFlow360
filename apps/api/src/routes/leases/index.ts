@@ -110,9 +110,9 @@ function generateRentSchedule(
       id: crypto.randomUUID(),
       tenantId,
       leaseId,
-      dueDate: dueDate.toISOString().split('T')[0],
-      periodStart: currentPeriodStart.toISOString().split('T')[0],
-      periodEnd: currentPeriodEnd.toISOString().split('T')[0],
+      dueDate: dueDate.toISOString().substring(0, 10),
+      periodStart: currentPeriodStart.toISOString().substring(0, 10),
+      periodEnd: currentPeriodEnd.toISOString().substring(0, 10),
       amount,
       currency,
       status: 'scheduled',
@@ -597,7 +597,7 @@ leasesRouter.post('/:id/terminate', requireTenant, requirePermission('leases:wri
       .run();
 
     // Update availability block end date
-    const terminationDate = parsed.data.terminationDate || new Date().toISOString().split('T')[0];
+    const terminationDate = parsed.data.terminationDate || new Date().toISOString().substring(0, 10);
     await db
       .prepare(
         `UPDATE availability_blocks

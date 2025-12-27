@@ -42,7 +42,7 @@ app.get('/overview', async (c) => {
     : 0;
 
   // Get today's stats
-  const today = new Date().toISOString().split('T')[0];
+  const today = new Date().toISOString().substring(0, 10);
   const todayMetrics = metrics.find(m => m.date === today);
 
   return c.json({
@@ -222,7 +222,7 @@ app.get('/monthly-comparison', async (c) => {
 function getPeriodDates(period: string): { startDate: string; endDate: string } {
   const today = new Date();
   today.setUTCHours(0, 0, 0, 0);
-  const endDate = today.toISOString().split('T')[0];
+  const endDate = today.toISOString().substring(0, 10);
 
   let startDate: string;
 
@@ -233,25 +233,25 @@ function getPeriodDates(period: string): { startDate: string; endDate: string } 
     case 'yesterday': {
       const yesterday = new Date(today);
       yesterday.setUTCDate(yesterday.getUTCDate() - 1);
-      startDate = yesterday.toISOString().split('T')[0];
+      startDate = yesterday.toISOString().substring(0, 10);
       break;
     }
     case 'last_7_days': {
       const last7 = new Date(today);
       last7.setUTCDate(last7.getUTCDate() - 7);
-      startDate = last7.toISOString().split('T')[0];
+      startDate = last7.toISOString().substring(0, 10);
       break;
     }
     case 'last_30_days': {
       const last30 = new Date(today);
       last30.setUTCDate(last30.getUTCDate() - 30);
-      startDate = last30.toISOString().split('T')[0];
+      startDate = last30.toISOString().substring(0, 10);
       break;
     }
     case 'last_90_days': {
       const last90 = new Date(today);
       last90.setUTCDate(last90.getUTCDate() - 90);
-      startDate = last90.toISOString().split('T')[0];
+      startDate = last90.toISOString().substring(0, 10);
       break;
     }
     case 'mtd': // Month to date
@@ -263,7 +263,7 @@ function getPeriodDates(period: string): { startDate: string; endDate: string } 
     default: {
       const last30default = new Date(today);
       last30default.setUTCDate(last30default.getUTCDate() - 30);
-      startDate = last30default.toISOString().split('T')[0];
+      startDate = last30default.toISOString().substring(0, 10);
     }
   }
 

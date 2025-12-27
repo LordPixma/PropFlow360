@@ -10,7 +10,7 @@
   },
   "dependencies": {
     "@propflow360/db": "workspace:*",
-    "drizzle-orm": "^0.36.4"
+    "drizzle-orm": "^0.38.3"
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^4.20241127.0",

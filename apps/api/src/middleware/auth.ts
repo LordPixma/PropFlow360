@@ -58,9 +58,7 @@ export const optionalAuthMiddleware = createMiddleware<AppEnv>(async (c, next) =
   await next();
 });
 
-export function requireAuth() {
-  return authMiddleware;
-}
+export const requireAuth = authMiddleware;
 
 export function requirePermission(...permissions: Permission[]) {
   return createMiddleware<AppEnv>(async (c, next) => {

@@ -34,7 +34,7 @@ export default {
     const yesterday = new Date();
     yesterday.setUTCDate(yesterday.getUTCDate() - 1);
     yesterday.setUTCHours(0, 0, 0, 0);
-    const dateStr = yesterday.toISOString().split('T')[0];
+    const dateStr = yesterday.toISOString().substring(0, 10);
 
     try {
       // Get all tenants
@@ -81,7 +81,7 @@ export default {
       const db = drizzle(env.DB_CORE);
       const body = await request.json() as { tenantId?: string; date?: string };
 
-      const dateStr = body.date || new Date().toISOString().split('T')[0];
+      const dateStr = body.date || new Date().toISOString().substring(0, 10);
       const tenantId = body.tenantId;
 
       if (!tenantId) {

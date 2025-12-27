@@ -146,12 +146,12 @@ async function processNotification(
     if (notification.type === 'email') {
       const result = await sendEmail(env, notification);
       success = result.success;
-      providerMessageId = result.messageId;
+      providerMessageId = result.messageId ?? null;
       providerResponse = result.response;
     } else if (notification.type === 'sms') {
       const result = await sendSMS(env, notification);
       success = result.success;
-      providerMessageId = result.messageId;
+      providerMessageId = result.messageId ?? null;
       providerResponse = result.response;
     }
 

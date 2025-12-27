@@ -38,8 +38,8 @@ export function MaintenanceUpdate({
       </Text>
 
       <Section style={ticketBox}>
-        <Text style={ticketTitle}>{title}</Text>
-        <Text style={ticketNumber}>{ticketNumber}</Text>
+        <Text style={ticketTitleStyle}>{title}</Text>
+        <Text style={ticketNumberStyle}>{ticketNumber}</Text>
 
         <Row style={{ marginTop: '16px' }}>
           <Column>
@@ -52,7 +52,7 @@ export function MaintenanceUpdate({
 
       <Section style={updateBox}>
         <Text style={updateLabel}>Update:</Text>
-        <Text style={updateMessage}>{updateMessage}</Text>
+        <Text style={updateMessageStyle}>{updateMessage}</Text>
       </Section>
 
       <Section style={detailsBox}>
@@ -90,14 +90,15 @@ export function MaintenanceUpdate({
 }
 
 function getStatusBadge(status: string) {
+  const defaultStyle = { bg: '#dbeafe', color: '#1e40af' };
   const colors: Record<string, { bg: string; color: string }> = {
-    open: { bg: '#dbeafe', color: '#1e40af' },
+    open: defaultStyle,
     in_progress: { bg: '#fef3c7', color: '#92400e' },
     resolved: { bg: '#d1fae5', color: '#065f46' },
     closed: { bg: '#f3f4f6', color: '#374151' },
   };
 
-  const style = colors[status] || colors.open;
+  const style = colors[status] ?? defaultStyle;
 
   return {
     ...badge,
@@ -107,14 +108,15 @@ function getStatusBadge(status: string) {
 }
 
 function getPriorityBadge(priority: string) {
+  const defaultStyle = { bg: '#fef3c7', color: '#92400e' };
   const colors: Record<string, { bg: string; color: string }> = {
     low: { bg: '#f3f4f6', color: '#374151' },
-    medium: { bg: '#fef3c7', color: '#92400e' },
+    medium: defaultStyle,
     high: { bg: '#fed7aa', color: '#9a3412' },
     urgent: { bg: '#fee2e2', color: '#991b1b' },
   };
 
-  const style = colors[priority] || colors.medium;
+  const style = colors[priority] ?? defaultStyle;
 
   return {
     ...badge,
@@ -145,14 +147,14 @@ const ticketBox = {
   margin: '24px 0',
 };
 
-const ticketTitle = {
+const ticketTitleStyle = {
   fontSize: '18px',
   fontWeight: 'bold',
   color: '#1a1a1a',
   margin: '0 0 8px',
 };
 
-const ticketNumber = {
+const ticketNumberStyle = {
   fontSize: '14px',
   color: '#737373',
   margin: '0',
@@ -183,7 +185,7 @@ const updateLabel = {
   margin: '0 0 8px',
 };
 
-const updateMessage = {
+const updateMessageStyle = {
   fontSize: '15px',
   color: '#1a1a1a',
   lineHeight: '22px',

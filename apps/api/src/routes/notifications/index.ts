@@ -3,22 +3,25 @@
  */
 
 import { Hono } from 'hono';
-import { drizzle } from 'drizzle-orm/d1';
 import { notifications } from '@propflow360/db';
 import { eq, and, desc } from 'drizzle-orm';
 import { queueNotification } from '@propflow360/notifications';
-import type { HonoEnv } from '../../types';
+import type { AppEnv } from '../../lib/context';
+import { requireAuth } from '../../middleware/auth';
 import templates from './templates';
 
-const app = new Hono<HonoEnv>();
+export const notificationsRouter = new Hono<AppEnv>();
+
+// Apply auth middleware
+notificationsRouter.use('*', requireAuth);
 
 // Mount template routes
-app.route('/templates', templates);
+notificationsRouter.route('/templates', templates);
 
 // List notifications (history)
-app.get('/', async (c) => {
-  const { tenantId } = c.get('auth');
-  const db = drizzle(c.env.DB_CORE);
+notificationsRouter.get('/', async (c) => {
+  const tenantId = c.get('tenantId')!;
+  const db = c.get('db');
 
   const status = c.req.query('status');
   const type = c.req.query('type');
@@ -52,10 +55,10 @@ app.get('/', async (c) => {
 });
 
 // Get single notification
-app.get('/:id', async (c) => {
-  const { tenantId } = c.get('auth');
-  const { id } = c.param();
-  const db = drizzle(c.env.DB_CORE);
+notificationsRouter.get('/:id', async (c) => {
+  const tenantId = c.get('tenantId')!;
+  const id = c.req.param('id');
+  const db = c.get('db');
 
   const [notification] = await db
     .select()
@@ -76,9 +79,9 @@ app.get('/:id', async (c) => {
 });
 
 // Queue a notification
-app.post('/', async (c) => {
-  const { tenantId } = c.get('auth');
-  const db = drizzle(c.env.DB_CORE);
+notificationsRouter.post('/', async (c) => {
+  const tenantId = c.get('tenantId')!;
+  const db = c.get('db');
 
   const body = await c.req.json();
   const {
@@ -128,10 +131,10 @@ app.post('/', async (c) => {
 });
 
 // Cancel a pending notification
-app.post('/:id/cancel', async (c) => {
-  const { tenantId } = c.get('auth');
-  const { id } = c.param();
-  const db = drizzle(c.env.DB_CORE);
+notificationsRouter.post('/:id/cancel', async (c) => {
+  const tenantId = c.get('tenantId')!;
+  const id = c.req.param('id');
+  const db = c.get('db');
 
   const [notification] = await db
     .select()
@@ -167,10 +170,10 @@ app.post('/:id/cancel', async (c) => {
 });
 
 // Retry a failed notification
-app.post('/:id/retry', async (c) => {
-  const { tenantId } = c.get('auth');
-  const { id } = c.param();
-  const db = drizzle(c.env.DB_CORE);
+notificationsRouter.post('/:id/retry', async (c) => {
+  const tenantId = c.get('tenantId')!;
+  const id = c.req.param('id');
+  const db = c.get('db');
 
   const [notification] = await db
     .select()
@@ -205,4 +208,4 @@ app.post('/:id/retry', async (c) => {
   return c.json({ success: true });
 });
 
-export default app;
+export default notificationsRouter;

@@ -22,9 +22,10 @@ export class BookingComProvider implements ChannelProvider {
   private readonly baseUrl = 'https://supply-xml.booking.com/hotels/xml';
 
   constructor(config: ChannelConfig) {
-    this.hotelId = config.credentials.hotelId;
-    this.username = config.credentials.username;
-    this.password = config.credentials.password;
+    const creds = config.credentials as Record<string, string>;
+    this.hotelId = creds.hotelId ?? '';
+    this.username = creds.username ?? '';
+    this.password = creds.password ?? '';
   }
 
   /**
