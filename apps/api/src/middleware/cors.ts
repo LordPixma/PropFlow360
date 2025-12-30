@@ -18,6 +18,16 @@ export const corsMiddleware = cors({
       return origin;
     }
 
+    // Allow Cloudflare Pages deployments
+    if (origin?.endsWith('.pages.dev')) {
+      return origin;
+    }
+
+    // Allow Cloudflare Workers dev URLs
+    if (origin?.endsWith('.workers.dev')) {
+      return origin;
+    }
+
     return null;
   },
   credentials: true,
