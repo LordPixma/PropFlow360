@@ -22,7 +22,7 @@
     "@propflow360/types": "workspace:*",
     "@propflow360/validators": "workspace:*",
     "drizzle-orm": "^0.38.3",
-    "hono": "^4.6.14",
+    "hono": "^4.11.4",
     "@hono/zod-validator": "^0.4.2",
     "nanoid": "^5.0.9"
   },
