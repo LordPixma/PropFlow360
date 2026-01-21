@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@propflow360/types": "workspace:*",
-    "hono": "^4.6.14",
+    "hono": "^4.11.4",
     "jose": "^5.9.6"
   },
   "devDependencies": {
